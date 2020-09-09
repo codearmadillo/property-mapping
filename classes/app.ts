@@ -10,6 +10,5 @@ export class AppModel implements IAppModel {
       this,
       new ApiModel(fromApi)
     );
-    console.log(this);
   }
 }
