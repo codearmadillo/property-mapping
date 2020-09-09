@@ -4,10 +4,7 @@ import { IApiModel } from './interfaces/api';
 /** API response */
 const apiResponse : IApiModel = {
   name: 'Jiri',
-  age: 24,
-  address: {
-    street: 'My street 20'
-  }
+  age: 24
 }
 /** Create App entity */
 const entity : AppModel = new AppModel(apiResponse);
