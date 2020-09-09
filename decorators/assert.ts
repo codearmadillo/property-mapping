@@ -51,7 +51,6 @@ export function Assert<T extends { new(...args: any[]): {} }>(map : IProperty[] 
   function deepAssign(prop : string, val : any, ctx : Object) {
     /** Explode */
     const path = prop.split('.');
-    console.log(prop);
     /** While */
     while(path.length != 1) {
       const sub = path.shift();

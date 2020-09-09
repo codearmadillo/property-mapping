@@ -3,9 +3,7 @@ import { Assert } from '../decorators/assert';
 
 @Assert([
   { from: 'name', to: 'userName' },
-  { from: 'age', to: 'userAge' },
-  { from: 'address', to: 'userAddress' },
-  { from: 'address.street', to: 'userAddress.userAddressStreet' }
+  { from: 'age', to: 'userAge' }
 ])
 export class ApiModel implements IApiModel {
   name : string;
