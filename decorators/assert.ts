@@ -29,7 +29,10 @@ export function Assert<T extends { new(...args: any[]): {} }>(map : IProperty[] 
           if(!mapMatch) {
             obj[entityProp] = entity[entityProp];
           } else {
+            deepAssign(mapMatch.to, entity[entityProp], obj);
+            return;
             /** If original is type of object, create empty object */
+            deepAssign(mapMatch.to, entity[entityProp], obj);
             if(typeof entity[entityProp] === 'object' && !Array.isArray(entity[entityProp])) {
               deepAssign(mapMatch.to, { }, obj);
             } else {
@@ -54,7 +57,6 @@ export function Assert<T extends { new(...args: any[]): {} }>(map : IProperty[] 
     /** While */
     while(path.length != 1) {
       const sub = path.shift();
-      console.log(sub);
     }
     ctx[prop] = val;
   }
