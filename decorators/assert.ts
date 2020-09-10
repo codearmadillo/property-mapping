@@ -42,7 +42,15 @@ export function Assert<T extends { new(...args: any[]): {} }>(map : IProperty[] 
                   obj
                 );
               } else {
-                deepAssign(j.to, { }, obj);
+                if(j.type) {
+                  deepAssign(
+                    j.to,
+                    new j.type(value),
+                    obj
+                  );
+                } else {
+                  deepAssign(j.to, { }, obj);
+                }
               }
             } else {
               deepAssign(j.to, value, obj);

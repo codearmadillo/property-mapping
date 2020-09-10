@@ -1,3 +1,7 @@
+export interface IAppContact {
+  userPhone : number;
+  userEmail : string;
+}
 export interface IAppSubmodel {
   keyTitle : string;
   keyValue : string
@@ -10,8 +14,9 @@ export interface IAppModel {
   userName : string;
   userAge : number;
   userAddress : {
-    userAddressStreet : string;
-  }
+    userAddressStreet : string
+  };
+  userContact? : IAppContact;
 }
 export interface IAppConjunctionModel extends IAppModel {
   userMetaFields : IAppSubmodel[];

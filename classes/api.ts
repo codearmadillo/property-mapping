@@ -1,6 +1,18 @@
-import { IApiModel, IApiSubmodel, IApiConjunctionModel } from "../interfaces/api";
+import { IApiModel, IApiSubmodel, IApiConjunctionModel, IApiContact } from "../interfaces/api";
 import { Assert } from '../decorators/assert';
 
+@Assert([
+  { from: 'phone', to: 'userPhone' },
+  { from: 'email', to: 'userEmail' }
+])
+export class ApiContact implements IApiContact {
+  phone: number;
+  email: string;
+  constructor(entity : IApiContact) {
+    Object.assign(this, entity);
+    delete this[0];
+  }
+}
 @Assert([
   { from: 'title', to: 'keyTitle' },
   { from: 'value', to: 'keyValue' },
@@ -48,6 +60,7 @@ export class ApiModel implements IApiModel {
   { from: 'age', to: 'userAge' },
   { from: 'address', to: 'userAddress' },
   { from: 'address.street', to: 'userAddress.userAddressStreet' },
+  { from: 'contact', to: 'userContact', type: ApiContact },
   { from: 'metafields', to: 'userMetaFields', type: ApiSubmodel }
 ])
 export class ApiConjunctionModel implements IApiConjunctionModel {

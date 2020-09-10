@@ -1,8 +1,15 @@
-import { IAppModel, IAppSubmodel, IAppConjunctionModel } from "../interfaces/app";
-import { IApiModel, IApiSubmodel, IApiConjunctionModel } from '../interfaces/api';
-import { ApiModel, ApiSubmodel, ApiConjunctionModel } from "./api";
+import { IAppModel, IAppSubmodel, IAppConjunctionModel, IAppContact } from "../interfaces/app";
+import { IApiModel, IApiSubmodel, IApiConjunctionModel, IApiContact } from '../interfaces/api';
+import { ApiModel, ApiSubmodel, ApiConjunctionModel, ApiContact } from "./api";
 import { Model } from './model';
 
+export class AppContact extends Model<IApiContact> implements IAppContact {
+  userPhone : number;
+  userEmail : string;
+  constructor(fromApi : IApiContact, type = ApiContact) {
+    super(fromApi, type);
+  }
+}
 export class AppSubmodel extends Model<IApiSubmodel> implements IAppSubmodel {
   keyTitle : string;
   keyValue : string
@@ -14,7 +21,6 @@ export class AppSubmodel extends Model<IApiSubmodel> implements IAppSubmodel {
     super(fromApi, type);
   }
 }
-
 export class AppModel extends Model<IApiModel> implements IAppModel {
   userName : string;
   userAge : number;
@@ -25,7 +31,6 @@ export class AppModel extends Model<IApiModel> implements IAppModel {
     super(fromApi, type);
   }
 }
-
 export class AppConjunctionModel extends Model<IApiConjunctionModel> implements IAppConjunctionModel {
   userName : string;
   userAge : number;

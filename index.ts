@@ -15,6 +15,10 @@ const apiResponse : IApiModel = {
   age: 24,
   address: {
     street: "My fancy address"
+  },
+  contact: {
+    phone: 50223490,
+    email: 'jrl@fiftytwo.com'
   }
 }
 /** Create App and Subapp entity */
