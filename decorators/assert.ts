@@ -24,7 +24,7 @@ export function Assert<T extends { new(...args: any[]): {} }>(map : IProperty[] 
         })
         .forEach((j, i, a) => {
           /** Find a match */
-          deepFind(j.from, entity);
+          console.log(`${j.from} => ${deepFind(j.from, entity)}`);
         });
         return;
         /** Create new object using map */
@@ -56,11 +56,18 @@ export function Assert<T extends { new(...args: any[]): {} }>(map : IProperty[] 
   }
   function deepFind(prop : string, ctx : Object) : boolean {
     const path = prop.split('.');
+    /** Duplicate context */
+    let context = ctx;
+    /** Iterate */
     while(path.length != 1) {
-      path.shift();
+      const subpath = path.shift();
+      if(!context.hasOwnProperty(subpath)) {
+        return false;
+      } else {
+        context = context[subpath];
+      }
     }
-    console.log(path);
-    return true;
+    return context.hasOwnProperty(path.pop());
   }
   function deepAssign(prop : string, val : any, ctx : Object) {
     /** Explode */

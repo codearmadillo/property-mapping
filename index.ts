@@ -11,4 +11,4 @@ const apiResponse : IApiModel = {
 }
 /** Create App entity */
 const entity : AppModel = new AppModel(apiResponse);
-console.log(entity);
+// console.log(entity);
