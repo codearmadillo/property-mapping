@@ -1,6 +1,7 @@
 interface IProperty {
   from : string;
   to : string;
+  type? : { new(...args: any[]): {} }
 }
 export function Assert<T extends { new(...args: any[]): {} }>(map : IProperty[] = []) {
   return (constructor: T) => {
@@ -27,8 +28,12 @@ export function Assert<T extends { new(...args: any[]): {} }>(map : IProperty[] 
           const value = deepFind(j.from, entity);
           /** If value is an object, create empty object */
           if(value) {
-            if(typeof value === 'object' && !Array.isArray(value)) {
-              deepAssign(j.to, { }, obj);
+            if(typeof value === 'object') {
+              if(Array.isArray(value)) {
+                deepAssign(j.to, [ ], obj);
+              } else {
+                deepAssign(j.to, { }, obj);
+              }
             } else {
               deepAssign(j.to, value, obj);
             }
