@@ -19,11 +19,7 @@ export class AppModel extends Model<IApiModel> implements IAppModel {
   userName : string;
   userAge : number;
   userAddress : {
-    userAddressStreet : string,
-    userHouse: {
-      houseNumber : number,
-      houseColor : string
-    }
+    userAddressStreet : string
   }
   constructor(fromApi : IApiModel, type = ApiModel) {
     super(fromApi, type);
@@ -34,12 +30,9 @@ export class AppConjunctionModel extends Model<IApiConjunctionModel> implements 
   userName : string;
   userAge : number;
   userAddress : {
-    userAddressStreet : string,
-    userHouse: {
-      houseNumber : number,
-      houseColor : string
-    }
+    userAddressStreet : string
   }
+  userMetaFields: AppSubmodel[];
   constructor(fromApi : IApiConjunctionModel, type = ApiConjunctionModel) {
     super(fromApi, type);
   }

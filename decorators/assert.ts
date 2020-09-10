@@ -30,7 +30,17 @@ export function Assert<T extends { new(...args: any[]): {} }>(map : IProperty[] 
           if(value) {
             if(typeof value === 'object') {
               if(Array.isArray(value)) {
-                deepAssign(j.to, [ ], obj);
+                deepAssign(
+                  j.to,
+                  value.map((v) => {
+                    if(!j.type) {
+                      return null;
+                    } else {
+                      return new j.type(v);
+                    }
+                  }),
+                  obj
+                );
               } else {
                 deepAssign(j.to, { }, obj);
               }

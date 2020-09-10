@@ -14,5 +14,5 @@ export interface IAppModel {
   }
 }
 export interface IAppConjunctionModel extends IAppModel {
-  metafields : IAppSubmodel[];
+  userMetaFields : IAppSubmodel[];
 }
