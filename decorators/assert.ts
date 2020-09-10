@@ -12,7 +12,8 @@ export function Assert<T extends { new(...args: any[]): {} }>(map : IProperty[] 
         /** Declare empty object */
         const obj = { };
         /** Sort map by path length */
-        map = map.sort((a, b) => {
+        map
+        .sort((a, b) => {
           let aL = a.from.split('.').length;
           let bL = b.from.split('.').length;
           if(aL === bL) {
@@ -20,7 +21,12 @@ export function Assert<T extends { new(...args: any[]): {} }>(map : IProperty[] 
           } else {
             return aL < bL ? -1 : 1;
           }
+        })
+        .forEach((j, i, a) => {
+          /** Find a match */
+          deepFind(j.from, entity);
         });
+        return;
         /** Create new object using map */
         Object.keys(entity).forEach((entityProp) => {
           /** Find match in map */
@@ -48,8 +54,13 @@ export function Assert<T extends { new(...args: any[]): {} }>(map : IProperty[] 
       }
     };
   }
-  function deepFind(prop : string, ctx : Object) {
-
+  function deepFind(prop : string, ctx : Object) : boolean {
+    const path = prop.split('.');
+    while(path.length != 1) {
+      path.shift();
+    }
+    console.log(path);
+    return true;
   }
   function deepAssign(prop : string, val : any, ctx : Object) {
     /** Explode */
@@ -60,4 +71,4 @@ export function Assert<T extends { new(...args: any[]): {} }>(map : IProperty[] 
     }
     ctx[prop] = val;
   }
-}
+};
