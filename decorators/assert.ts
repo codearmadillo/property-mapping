@@ -23,38 +23,22 @@ export function Assert<T extends { new(...args: any[]): {} }>(map : IProperty[] 
           }
         })
         .forEach((j, i, a) => {
-          /** Find a match */
-          console.log(`${j.from} => ${deepFind(j.from, entity)}`);
-        });
-        return;
-        /** Create new object using map */
-        Object.keys(entity).forEach((entityProp) => {
-          /** Find match in map */
-          const mapMatch = map.find((i) => i.from === entityProp);
-          /** If map match isn't found, copy previous value */
-          if(!mapMatch) {
-            obj[entityProp] = entity[entityProp];
-          } else {
-            deepAssign(mapMatch.to, entity[entityProp], obj);
-            return;
-            /** If original is type of object, create empty object */
-            deepAssign(mapMatch.to, entity[entityProp], obj);
-            if(typeof entity[entityProp] === 'object' && !Array.isArray(entity[entityProp])) {
-              deepAssign(mapMatch.to, { }, obj);
+          /** Get deep value */
+          const value = deepFind(j.from, entity);
+          /** If value is an object, create empty object */
+          if(value) {
+            if(typeof value === 'object' && !Array.isArray(value)) {
+              deepAssign(j.to, { }, obj);
             } else {
-              /** If value isn't object, simply copy it */
-              deepAssign(mapMatch.to, entity[entityProp], obj);
+              deepAssign(j.to, value, obj);
             }
           }
-          /** Delete value from original entity */
-          delete entity[entityProp];
         });
-        /** Assign new values */
         Object.assign(this, obj);
       }
     };
   }
-  function deepFind(prop : string, ctx : Object) : boolean {
+  function deepFind(prop : string, ctx : Object) : any {
     const path = prop.split('.');
     /** Duplicate context */
     let context = ctx;
@@ -62,20 +46,25 @@ export function Assert<T extends { new(...args: any[]): {} }>(map : IProperty[] 
     while(path.length != 1) {
       const subpath = path.shift();
       if(!context.hasOwnProperty(subpath)) {
-        return false;
+        return null;
       } else {
         context = context[subpath];
       }
     }
-    return context.hasOwnProperty(path.pop());
+    return context[path.pop()];
   }
   function deepAssign(prop : string, val : any, ctx : Object) {
     /** Explode */
     const path = prop.split('.');
     /** While */
     while(path.length != 1) {
-      const sub = path.shift();
+      const subpath = path.shift();
+      if(ctx.hasOwnProperty(subpath)) {
+        ctx = ctx[subpath];
+      } else {
+        return null;
+      }
     }
-    ctx[prop] = val;
+    ctx[path.pop()] = val;
   }
 };

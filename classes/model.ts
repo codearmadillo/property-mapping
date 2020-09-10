@@ -4,5 +4,7 @@ export class Model<T> {
       this,
       new type(from)
     );
+    /** Remove artifacts */
+    delete this[0];
   }
 }
